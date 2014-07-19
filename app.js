@@ -1,7 +1,9 @@
 var app=require('http').createServer(handler),
 	io=require('socket.io').listen(app),
 	fs=require('fs');
-app.listen(1336);
+
+var port = process.env.PORT || 5000;
+app.listen(port);
 io.set('log level',1);
 function handler(req,res){
 	fs.readFile(__dirname+'/index.html',function(err,data){
