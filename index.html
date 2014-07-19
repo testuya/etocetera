@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>socket.ioの練習</title>
+</head>
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script>
+$(function(){
+	var socket=io.connect();
+	
+var y,sum_y=0;
+
+window.addEventListener('devicemotion', function(evt) {
+  y=evt.acceleration.y;
+  sum_y=sum_y+y;
+  socket.emit('emit_from_iphone',sum_y);
+},true);
+var dx=0;
+	socket.on('emit_from_pc',function(data){
+	dx=data;
+	console.log(dx);
+	});
+
+
+//画像オブジェクトに任意の画像を読み込み
+var img = new Image();
+//画像のパス指定
+img.src = "http://usee.com.tw/pics/team/%E8%A5%BF%E9%9B%85%E5%9C%96%E9%A2%A8%E6%99%AF4.gif.gif";
+var canvas = document.getElementById('sample');
+   //2Dコンテキストをctxに格納
+   var ctx = canvas.getContext('2d');
+//画像の読み込みが終わったら、canvasに貼付けを実行
+img.onload = (function(){
+   //canvas(c1)のノードオブジェクト
+   
+   //読み込んだimgをcanvas(c1)に貼付け
+   ctx.drawImage(img, 50, 0,100,100);
+});
+function draw(){
+	ctx.clearRect(0, 0, 1000, 200)
+
+	ctx.drawImage(img, 10+dx*100, 0,100,100);
+};
+setInterval(draw,100);
+});
+
+</script>
+
+
+<body>
+	
+<canvas width="1000" height="200" id="sample">
+	
+</canvas>
+
+<p>home</p>	
+<img src="http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=%http://192.168.1.21:1336/?&choe=Shift_JIS" width="150" height="150" alt="QRコード">
+<br>
+<p>iphone</p>
+<img src="http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=http://172.20.10.5:1336/&choe=Shift_JIS" width="150" height="150" alt="QRコード">
+</body>
+
+<p>cojt</p>
+<img src="http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=http://192.168.86.242:1336/&choe=Shift_JIS" width="150" height="150" alt="QRコード">
+</body>
+
+
+</body>
+</html>
